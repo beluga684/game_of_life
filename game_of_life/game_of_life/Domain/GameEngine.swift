@@ -21,11 +21,19 @@ final class GameEngine {
     
     // Очистка поля
     func clear() {
-        fatalError("Implement")
+        for row in 0..<grid.rows {
+            for column in 0..<grid.columns {
+                grid.cellState(row: row, column: column, active: false)
+            }
+        }
     }
     
     // Случайная генерация
     func randomize() {
-        fatalError("Implement")
+        for row in 0..<grid.rows {
+            for column in 0..<grid.columns {
+                grid.cellState(row: row, column: column, active: Bool.random())
+            }
+        }
     }
 }

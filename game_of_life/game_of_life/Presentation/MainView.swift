@@ -9,6 +9,8 @@ struct MainView: View {
     
     var body: some View {
         VStack {
+            statisticsPanel.padding(.horizontal)
+            
             GameFieldRepresentable(grid: viewModel.grid, onCellTap: { row, column in
                 viewModel.didTapCell(row: row, column: column)
             })
@@ -22,18 +24,39 @@ struct MainView: View {
         }
     }
     
+    private var statisticsPanel: some View {
+        HStack {
+            Spacer()
+            Text("Поколение: \(viewModel.generation)")
+            Spacer()
+            Text("Живых ячеек: \(viewModel.activeCellsCount)")
+            Spacer()
+        }
+    }
+    
     private var controlPanel: some View {
         HStack {
-            Button("Start") {}
-            Button("Stop") {}
-            Button("Next") {}
-            Button("Clear") {}
+            Button("Random") {
+                viewModel.random()
+            }
+            Button("Start") {
+                viewModel.start()
+            }
+            Button("Stop") {
+                viewModel.stop()
+            }
+            Button("Next") {
+                viewModel.nextStep()
+            }
+            Button("Clear") {
+                viewModel.clear()
+            }
         }
     }
 
     private static func makeDefaultViewModel() -> GameViewModel {
-        let rows = 25
-        let columns = 20
+        let rows = 40
+        let columns = 30
         let cells = Array(
             repeating: Array(repeating: Cell(isActive: false), count: columns),
             count: rows
