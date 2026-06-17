@@ -21,42 +21,61 @@ struct MainView: View {
             .padding()
             
             controlPanel
-        }
+        }.accentColor(.black)
     }
     
     private var statisticsPanel: some View {
         HStack {
             Spacer()
-            Text("Поколение: \(viewModel.generation)")
+            Text("Generation: \(viewModel.generation)")
             Spacer()
-            Text("Живых ячеек: \(viewModel.activeCellsCount)")
+            Text("Active cells: \(viewModel.activeCellsCount)")
             Spacer()
-        }
+            Text("Status: \(viewModel.gameStatus)")
+            Spacer()
+        }.font(.title2)
     }
     
     private var controlPanel: some View {
         HStack {
-            Button("Random") {
-                viewModel.random()
-            }
-            Button("Start") {
-                viewModel.start()
-            }
-            Button("Stop") {
-                viewModel.stop()
-            }
-            Button("Next") {
-                viewModel.nextStep()
-            }
-            Button("Clear") {
+            Button {
+                viewModel.isRunning ? viewModel.stop() : viewModel.start()
+            } label: {
+                VStack{
+                    viewModel.isRunning ?
+                    Image(systemName: "pause").font(.title2) :
+                    Image(systemName: "play").font(.title2)
+                }
+            }.buttonStyle(.glass)
+            
+            Button {
                 viewModel.clear()
-            }
+            } label: {
+                Image(systemName: "trash")
+            }.buttonStyle(.glass)
+            
+            Button {
+                viewModel.random()
+            } label: {
+                Image(systemName: "wand.and.sparkles").font(.title2)
+            }.buttonStyle(.glass)
+            
+            VStack {
+                Text("Interval: \(viewModel.interval, specifier: "%.1f") sec")
+                Slider(value: Binding(
+                    get: { viewModel.interval },
+                    set: { viewModel.updateInterval($0) }
+                ),
+                       in: 0.1...1.0,
+                       step: 0.1
+                ).frame(maxWidth: 400)
+            }.padding(.leading)
         }
     }
 
     private static func makeDefaultViewModel() -> GameViewModel {
         let rows = 40
-        let columns = 30
+        let columns = 70
         let cells = Array(
             repeating: Array(repeating: Cell(isActive: false), count: columns),
             count: rows

@@ -4,6 +4,23 @@ final class GameEngine {
     private let calculator: GenerationCalculator
     private(set) var grid: Grid
     
+    // Проверка отсутствия активных ячеек
+    var isExtinct: Bool {
+        for i in 0..<grid.rows {
+            for j in 0..<grid.columns {
+                if grid.cell(row: i, column: j).isActive {
+                    return false
+                }
+            }
+        }
+        
+        return true
+    }
+    
+    var isStable: Bool {
+        grid == calculator.nextGeneration(from: grid)
+    }
+    
     init(calculator: GenerationCalculator, grid: Grid) {
         self.calculator = calculator
         self.grid = grid

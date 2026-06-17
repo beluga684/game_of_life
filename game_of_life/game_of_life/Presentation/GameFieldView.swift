@@ -88,7 +88,9 @@ final class GameFieldView: UIView {
         let row = Int(point.y / cellHeight)
         
         guard
+            row >= 0,
             row < grid.rows,
+            column >= 0,
             column < grid.columns
         else { return }
         

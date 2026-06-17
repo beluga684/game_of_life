@@ -1,10 +1,10 @@
 import Foundation
 
-struct Cell {
+struct Cell: Equatable {
     var isActive: Bool
 }
 
-struct Grid {
+struct Grid: Equatable {
     let rows: Int
     let columns: Int
     

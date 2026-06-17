@@ -11,7 +11,7 @@ import SwiftUI
 struct game_of_lifeApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            MainView().preferredColorScheme(.light)
         }
     }
 }
