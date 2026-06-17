@@ -15,7 +15,11 @@ struct Grid {
         return cells[row][column]
     }
     
-    // Изменение состояния клетки
+    // Изменение состояния ячейки
+    mutating func cellState(row: Int, column: Int, active: Bool) {
+        cells[row][column].isActive = active
+    }
+    
     mutating func toggleCell(row: Int, column: Int) {
         cells[row][column].isActive.toggle()
     }

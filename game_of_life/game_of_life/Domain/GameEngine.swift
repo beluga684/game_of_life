@@ -11,7 +11,7 @@ final class GameEngine {
     
     // Следующее поколение
     func advance() {
-        fatalError("Implement")
+        grid = calculator.nextGeneration(from: grid)
     }
     
     // Изменение состояния клетки
